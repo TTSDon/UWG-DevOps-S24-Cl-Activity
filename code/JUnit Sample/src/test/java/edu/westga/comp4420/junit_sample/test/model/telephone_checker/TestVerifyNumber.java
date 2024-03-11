@@ -14,22 +14,14 @@ import edu.westga.comp4420.junit_sample.model.TelephoneChecker;
 class TestVerifyNumber {
 
 	@ParameterizedTest
-	@ValueSource(longs = {999999L})
-	void testInvalidNumbers(long number) {
-		TelephoneChecker checker = new TelephoneChecker();
-		
-		boolean result = checker.verifyNumber(number);
-		
-		assertFalse(result, "checking if number was reported as valid");
-	}
-
-	@ParameterizedTest
-	@CsvSource({"999999, false"})
+	@CsvSource({"999999, false", "1000000, true", "9999999, true",
+	"10000000, false", "999999999, false", "1000000000, true",
+	"9999999999, true", "10000000000, false"})
 	void test(long number, boolean expectedResult) {
 		TelephoneChecker checker = new TelephoneChecker();
 		
 		boolean result = checker.verifyNumber(number);
 		
-		assertEquals(expectedResult, result, "checking if number was reported as valid");
+		assertEquals(expectedResult, result, "checking if number (" + number + ") was reported as valid");
 	}
 }
